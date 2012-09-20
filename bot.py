@@ -20,7 +20,7 @@ class IRCBot:
     def initConnection( self ):
         self.socket.connect( ( self.host, self.port ) )
         self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
-        self.socket.send( "self.nick " + self.nick + "\r\n" )
+        self.socket.send( "NICK " + self.nick + "\r\n" )
         self.socket.send( "JOIN " + self.channel + "\r\n" )
         
         
@@ -36,10 +36,22 @@ class IRCBot:
             
             #Ping from server
             if ( "PING :" in line ):
-                pongToServer( line )
+                self.pongToServer( line )
                 
             if ( "ACTION" in line ):
                 #parse Action
+                pass
+            
+            if( "PRIVMSG" in line ):
+                #Normal messages to channel
+                try:
+                    msg = line.split( ':', 2 )[ 2 ] #What was said
+                    nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
+                except:
+                    continue
+                
+                if re.search( 'ping', msg, re.IGNORECASE ):
+                    self.privmsg( nick + ": Pong" )
                 pass
     
     
@@ -55,6 +67,6 @@ class IRCBot:
         
         
 
-if __name__ == "__main___":
+if __name__ == "__main__":
     bot = IRCBot()
     bot.run()
