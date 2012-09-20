@@ -41,7 +41,7 @@ class IRCBot:
             for line in lines:
                 print "Newline:::: " + line
                 self.parseline( line )
-                
+
                 """
                 #Ping from server
                 if ( "PING :" in line ):
@@ -63,7 +63,7 @@ class IRCBot:
 
     def addrule( self, rule, callback):
         if rule in self.rules.keys():
-            self.rules[ rule ].append(callback)
+            self.rules[ rule ].append( callback )
         else:
             self.rules[ rule ] = [ callback ]
 
@@ -82,17 +82,28 @@ class IRCBot:
         pingmsg = pingcmd[ 1 ]
         self.socket.send( "PONG :" + pingmsg + "\r\n" )
     
-    
-    def privmsg( self, msg, user='' ):
-        if user == '':
-            self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
+    def getnick(self, user):
+        m = re.match(":(.*?)!~", user)
+        if m:
+            return m.group(1)
         else:
+            return False
+
+    def privmsg( self, msg, user=False ):
+        if user:
             self.socket.send( "PRIVMSG " + self.channel + " :" + user + ": " + msg + "\r\n" )
-        
+        else:
+            self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
+            
+
 
 def privmsg( line, socket ):
-    print 'received privmsg'
-
+    if line.lower().find('ping') != -1 and line.find( bot.nick) != -1:
+        nick = bot.getnick(line.split()[0])
+        if nick:
+            bot.privmsg( nick  + ': pong' )
+        else:
+            bot.privmsg( 'pong' )
 
 def privmsg2( line, socket ):
     print 'received privmsg2'    
