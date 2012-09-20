@@ -33,6 +33,14 @@ class IRCBot:
         while True:
             line = self.socket.recv( self.maxlength ).strip( "\r\n" )
             print line
+            
+            #Ping from server
+            if ( "PING :" in line ):
+                pongToServer( line )
+                
+            if ( "ACTION" in line ):
+                #parse Action
+                pass
     
     
     def pongToServer( self, msg ):
