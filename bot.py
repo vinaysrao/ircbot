@@ -39,7 +39,7 @@ class IRCBot:
         while True:
             lines = self.readlines()
             for line in lines:
-                print "Newline:::: " + line
+                print line
                 self.parseline( line )
 
                 """
@@ -108,10 +108,14 @@ def privmsg( line, socket ):
 def privmsg2( line, socket ):
     print 'received privmsg2'    
 
+def pong( line, socket ):
+    bot.pongToServer( line )
+
 if __name__ == "__main__":
     bot = IRCBot()
     bot.addrule( 'PRIVMSG', privmsg )
     bot.addrule( 'PRIVMSG', privmsg2)
+    bot.addrule( 'PING', pong)
     bot.run()
     
 
