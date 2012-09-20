@@ -73,7 +73,9 @@ class IRCBot:
             return False
 
 
-    def getMsg( self )
+    def getMsg( self, line ):
+        return line.split( ':', 2 )[ 2 ]
+
 
 
 if __name__ == "__main__":
@@ -81,5 +83,3 @@ if __name__ == "__main__":
     bot.addrule( 'PRIVMSG', privmsg )
     bot.addrule( 'PING', pong )
     bot.run()
-    
-
