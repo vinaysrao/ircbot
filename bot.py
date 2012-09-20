@@ -42,13 +42,10 @@ class IRCBot:
                 #parse Action
                 pass
             
-            if( "PRIVMSG" in line ):
+            if( " PRIVMSG " in line ):
                 #Normal messages to channel
-                try:
-                    msg = line.split( ':', 2 )[ 2 ] #What was said
-                    nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
-                except:
-                    continue
+                msg = line.split( ':', 2 )[ 2 ] #What was said
+                nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
                 
                 if re.search( 'ping', msg, re.IGNORECASE ):
                     self.privmsg( nick + ": Pong" )
