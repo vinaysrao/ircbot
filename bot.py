@@ -65,8 +65,11 @@ class IRCBot:
         self.socket.send( "PONG :" + pingmsg + "\r\n" )
     
     
-    def privmsg( self, msg ):
-        self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
+    def privmsg( self, user='', msg ):
+        if user == '':
+            self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
+        else:
+            self.socket.send( "PRIVMSG " + self.channel + " :" + user + ": " + msg + "\r\n" )
         
         
 
