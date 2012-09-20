@@ -28,29 +28,35 @@ class IRCBot:
         self.socket.send( "NAMES " + self.channel + "\r\n" )
         #Implement parsing this
         
-        
+    def readlines( self ):
+        data = self.lastline + self.socket.recv( self.maxlength )
+        lines = data.split( "\r\n" )
+        self.lastline = lines.pop()
+        return lines
+
     def run( self ):
         while True:
-            line = self.socket.recv( self.maxlength ).strip( "\r\n" )
-            print line
-            
-            #Ping from server
-            if ( "PING :" in line ):
-                self.pongToServer( line )
+            lines = self.readlines()
+            for line in lines:
+                print "Newline:::: " + line
+                    
+                #Ping from server
+                if ( "PING :" in line ):
+                    self.pongToServer( line )
+                    
+                if ( "ACTION" in line ):
+                    #parse Action
+                    pass
                 
-            if ( "ACTION" in line ):
-                #parse Action
-                pass
-            
-            if( " PRIVMSG " in line ):
-                #Normal messages to channel
-                msg = line.split( ':', 2 )[ 2 ] #What was said
-                nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
-                
-                if re.search( 'ping', msg, re.IGNORECASE ):
-                    self.privmsg( nick + ": Pong" )
-                pass
-    
+                if( " PRIVMSG " in line ):
+                    #Normal messages to channel
+                    msg = line.split( ':', 2 )[ 2 ] #What was said
+                    nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
+                    
+                    if re.search( 'ping', msg, re.IGNORECASE ):
+                        self.privmsg( nick + ": Pong" )
+                    pass
+        
     
     def pongToServer( self, msg ):
         #Check if "PING :" is in 'line' and call pongToServer
