@@ -1,5 +1,6 @@
 import socket
 import re
+from rules import *
 
 class IRCBot:
     #A simple IRC Bot that pongs et all
@@ -42,26 +43,8 @@ class IRCBot:
                 print line
                 self.parseline( line )
 
-                """
-                #Ping from server
-                if ( "PING :" in line ):
-                    self.pongToServer( line )
-                    
-                if ( "ACTION" in line ):
-                    #parse Action
-                    pass
-                
-                if( " PRIVMSG " in line ):
-                    #Normal messages to channel
-                    msg = line.split( ':', 2 )[ 2 ] #What was said
-                    nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
-                    
-                    if re.search( 'ping', msg, re.IGNORECASE ):
-                        self.privmsg( nick + ": Pong" )
-                    pass
-                """
 
-    def addrule( self, rule, callback):
+    def addrule( self, rule, callback ):
         if rule in self.rules.keys():
             self.rules[ rule ].append( callback )
         else:
@@ -70,8 +53,8 @@ class IRCBot:
 
     def parseline( self, line ):
         for rule in self.rules:
-            if line.find(rule) != -1:
-                for cb in self.rules[rule]:
+            if line.find( rule ) != -1:
+                for cb in self.rules[ rule ]:
                     cb( line, self.socket )
 
         
@@ -82,40 +65,21 @@ class IRCBot:
         pingmsg = pingcmd[ 1 ]
         self.socket.send( "PONG :" + pingmsg + "\r\n" )
     
-    def getnick(self, user):
-        m = re.match(":(.*?)!~", user)
+    def getnick( self, user ):
+        m = re.match( ":(.*?)!~", user )
         if m:
-            return m.group(1)
+            return m.group( 1 )
         else:
             return False
 
-    def privmsg( self, msg, user=False ):
-        if user:
-            self.socket.send( "PRIVMSG " + self.channel + " :" + user + ": " + msg + "\r\n" )
-        else:
-            self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
-            
 
+    def getMsg( self )
 
-def privmsg( line, socket ):
-    if line.lower().find('ping') != -1 and line.find( bot.nick) != -1:
-        nick = bot.getnick(line.split()[0])
-        if nick:
-            bot.privmsg( nick  + ': pong' )
-        else:
-            bot.privmsg( 'pong' )
-
-def privmsg2( line, socket ):
-    print 'received privmsg2'    
-
-def pong( line, socket ):
-    bot.pongToServer( line )
 
 if __name__ == "__main__":
     bot = IRCBot()
     bot.addrule( 'PRIVMSG', privmsg )
-    bot.addrule( 'PRIVMSG', privmsg2)
-    bot.addrule( 'PING', pong)
+    bot.addrule( 'PING', pong )
     bot.run()
     
 
