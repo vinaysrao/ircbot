@@ -19,13 +19,13 @@ class IRCBot:
     
     def initConnection( self ):
         self.socket.connect( ( self.host, self.port ) )
-        self.socket.send( "USER " + NICK + " " + NICK + " " + NICK + " :bmsbot\n" )
-        self.socket.send( "NICK " + NICK + "\r\n" )
-        self.socket.send( "JOIN " + CHANNEL + "\r\n" )
+        self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
+        self.socket.send( "self.nick " + self.nick + "\r\n" )
+        self.socket.send( "JOIN " + self.channel + "\r\n" )
         
         
     def nicklist( self ):
-        self.socket.send( "NAMES " + CHANNEL + "\r\n" )
+        self.socket.send( "NAMES " + self.channel + "\r\n" )
         #Implement parsing this
         
         
@@ -43,7 +43,7 @@ class IRCBot:
     
     
     def privmsg( self, msg ):
-        self.socket.send( "PRIVMSG " + CHANNEL + " :" + msg + "\r\n" )
+        self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
         
         
 
