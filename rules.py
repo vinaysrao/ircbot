@@ -40,11 +40,18 @@ def command( bot, line, socket ):
 		bot.privmsg( commandstring )
 
 	if command in [ 'topic' ]:
-		if commandstring != '':
-			msg = commandstring + ': '
-		else:
-			msg = ''
+		msg = prependNick( bot, commandstring )
 		bot.privmsg( msg + "Topic is: " + bot.channeltopic )
+
+	if command in [ 'yourcode' ]:
+		msg = prependNick( bot, commandstring )
+		msg += 'https://github.com/vinaysrao/ircbot.git'
+		bot.privmsg( msg )
+
+	if command in [ 'god' ]:
+		msg = prependNick( bot, commandstring )
+		msg += '\'  \''
+		bot.privmsg( msg )
 
 
 def nameList( bot, line, socket ):
@@ -79,3 +86,11 @@ def join( bot, line, socket ):
 			msg = nick + ': '
 			msg +=  'If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
 			bot.privmsg( msg )
+
+
+def prependNick( bot, nick ):
+	if nick != '' and nick in bot.nameslist:
+		msg = nick + ': '
+	else:
+		msg = ''
+	return msg

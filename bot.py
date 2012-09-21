@@ -23,7 +23,7 @@ class IRCBot:
     #Requires a call to 'run' to start
     lastline = ''
     rules = {}
-    def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsbot', port = 6667, symbol = '$' ):
+    def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsbot', port = 6667, symbol = '!' ):
         self.host = host
         self.channel = channel
         self.nick = nick
@@ -99,13 +99,18 @@ class IRCBot:
 
 
     def getMsg( self, line ):
-        return line.split( ':', 2 )[ 2 ]
+        x = line.split( ':', 2 )
+        if len( x ) < 3:
+            return ' '
+        return x[ 2 ] 
 
 
     def getCmdAndCmdString( self, line ):
         #Returns a tuple, containing the command and the command
         #string as its members
         line = self.getMsg( line )
+        if line[ 0 ] != self.symbol:
+            return ( '', '' )
         command = line[ 1: ].split()[ 0 ]
         if command == '':
             return ( '', '' )
