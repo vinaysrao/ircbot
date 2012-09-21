@@ -50,10 +50,32 @@ def command( bot, line, socket ):
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
 		msg = bot.getMsg( line )
+		nameslist = []
 		for i in msg.split():
-			print i,
+			if i == bot.nick:
+				continue
+			if i == '366':
+				nameslist.pop()
+				break
+			nameslist.append( i )
+		bot.addNames( nameslist )
 
 
 def topic( bot, line, socket ):
 	msg = bot.getMsg( line )
 	bot.setChannelTopic( msg )
+
+
+def join( bot, line, socket ):
+	import re
+	nick = re.search( ':(.*)!', line )
+	if nick:
+		nick = nick.group( 1 )
+		if nick not in bot.nameslist and nick != bot.nick:
+			bot.addNames( [ nick ] )
+			msg = nick + ': '
+			msg += 'Hi! Looks like you\'re new here. This is the IRC Channel of the \"BMS - Libre User Group\".'
+			bot.privmsg( msg )
+			msg = nick + ': '
+			msg +=  'If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
+			bot.privmsg( msg )

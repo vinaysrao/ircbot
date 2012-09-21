@@ -32,6 +32,7 @@ class IRCBot:
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
+        self.nameslist = []
         
         self.initConnection()
     
@@ -121,12 +122,17 @@ class IRCBot:
         self.channeltopic = channeltopic
 
 
+    def addNames( self, nameslist ):
+        self.nameslist.extend( nameslist )
+
+
 
 if __name__ == "__main__":
     bot = IRCBot()
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
+    bot.addrule( 'JOIN', rules.join )
     bot.addrule( bot.symbol, rules.command )
     bot.addrule( '353', rules.nameList )
     bot.addrule( '332', rules.topic )
