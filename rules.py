@@ -1,11 +1,14 @@
-def privmsg( line, socket ):
-    if line.lower().find( 'ping' ) != -1 and line.find( bot.nick ) != -1:
+def privmsg( bot, line, socket ):
+    if 'ping' in line.lower() and bot.nick in line:
         nick = bot.getnick( line.split() [ 0 ] )
         if nick:
-            bot.privmsg( nick  + ': pong' )
-        else:
-            bot.privmsg( 'pong' )
+            bot.privmsg( nick  + ': Pong' )
 
 
-def pong( line, socket ):
+def pong( bot, line, socket ):
     bot.pongToServer( line )
+
+
+def action( bot, line, socket ):
+	if 'kick' in line.lower():
+		bot.privmsg( 'Ow' )
