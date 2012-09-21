@@ -112,7 +112,7 @@ class IRCBot:
         if line[ 0 ] != self.symbol:
             return ( '', '' )
 
-        re.search('^!(.*?)\s(.*)?', line)
+        re.match(r'!(.+?)\b\s?(.*)$', line)
         if re:
             return re.groups('')
         else:
@@ -128,7 +128,7 @@ class IRCBot:
 
 
 if __name__ == "__main__":
-    bot = IRCBot()
+    bot = IRCBot( nick='bmsbot2' )
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
