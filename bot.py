@@ -111,17 +111,12 @@ class IRCBot:
         line = self.getMsg( line )
         if line[ 0 ] != self.symbol:
             return ( '', '' )
-        command = line[ 1: ].split()[ 0 ]
-        if command == '':
-            return ( '', '' )
-        end = re.search( command, line )
-        if end:
-            end = end.end() + 1
-            if end >= len( line ):
-                return ( command, '' )
-            commandstring = line[ end: ]
-            return ( command, commandstring )
 
+        re.search('^!(.*?)\s(.*)?', line)
+        if re:
+            return re.groups('')
+        else:
+            return ( '', '')
 
     def setChannelTopic( self, channeltopic ):
         self.channeltopic = channeltopic
