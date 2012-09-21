@@ -54,6 +54,7 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 
+
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
 		msg = bot.getMsg( line )

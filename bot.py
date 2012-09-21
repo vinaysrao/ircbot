@@ -110,13 +110,13 @@ class IRCBot:
         #string as its members
         line = self.getMsg( line )
         if line[ 0 ] != self.symbol:
-            return ( '', '' )
+            return ( '' , '' )
 
-        re.match(r'!(.+?)\b\s?(.*)$', line)
-        if re:
-            return re.groups('')
+        m = re.match( r'!(.+?)\b\s?(.*)$' , line )
+        if m:
+            return m.groups( '' )
         else:
-            return ( '', '')
+            return ( '' , '' )
 
     def setChannelTopic( self, channeltopic ):
         self.channeltopic = channeltopic
@@ -128,7 +128,7 @@ class IRCBot:
 
 
 if __name__ == "__main__":
-    bot = IRCBot( nick='bmsbot2' )
+    bot = IRCBot( )
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
