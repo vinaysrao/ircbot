@@ -1,6 +1,6 @@
 import socket
 import re
-from rules import *
+import rules
 
 class IRCBot:
     #A simple IRC Bot that pongs et all
@@ -13,6 +13,7 @@ class IRCBot:
         self.nick = nick
         self.port = port
         self.symbol = symbol
+        self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
         
@@ -67,6 +68,8 @@ class IRCBot:
 
 
     def privmsg( self, msg ):
+        if msg == '':
+            return
         self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
 
     
@@ -85,16 +88,30 @@ class IRCBot:
     def getCmdAndCmdString( self, line ):
         #Returns a tuple, containing the command and the command
         #string as its members
+        line = self.getMsg( line )
         command = line[ 1: ].split()[ 0 ]
-        end = re.search( command, line ) + 1
-        commandstring = line[ end: ]
-        return ( command, commandstring )
+        if command == '':
+            return ( '', '' )
+        end = re.search( command, line )
+        if end:
+            end = end.end() + 1
+            if end >= len( line ):
+                return ( command, '' )
+            commandstring = line[ end: ]
+            return ( command, commandstring )
+
+
+    def setChannelTopic( self, channeltopic ):
+        self.channeltopic = channeltopic
 
 
 
 if __name__ == "__main__":
     bot = IRCBot()
-    bot.addrule( 'PRIVMSG', privmsg )
-    bot.addrule( 'PING :', pong ) #Special case, to pong back to the server only
-    bot.addrule( 'ACTION', action )
+    bot.addrule( 'PRIVMSG', rules.privmsg )
+    bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
+    bot.addrule( 'ACTION', rules.action )
+    bot.addrule( bot.symbol, rules.command )
+    bot.addrule( '353', rules.nameList )
+    bot.addrule( '332', rules.topic )
     bot.run()
