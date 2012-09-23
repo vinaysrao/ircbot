@@ -33,9 +33,7 @@ class IRCBot:
         self.socket = socket.socket()
         self.maxlength = 2048
 
-	f = open('known_nicks.txt', 'r')
-	self.nameslist = map((lambda foo: foo.strip()), f.readlines())
-	f.close()
+    	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
         
         self.initConnection()
     
