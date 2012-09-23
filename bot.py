@@ -32,7 +32,10 @@ class IRCBot:
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
-        self.nameslist = []
+
+	f = open('known_nicks.txt', 'r')
+	self.nameslist = map((lambda foo: foo.strip()), f.readlines())
+	f.close()
         
         self.initConnection()
     
