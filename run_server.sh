@@ -7,6 +7,6 @@ read userinput
 while [ true ]; do
         git reset --hard HEAD
         git pull --rebase
-        python ircbot.py
+        python bot.py
 done
 
