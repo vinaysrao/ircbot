@@ -61,6 +61,7 @@ def command( bot, line, socket ):
 			return
 		if not isNewNick( nick, bot.nameslist ):
 			bot.addKnownNick( commandstring )
+			bot.privmsg( commandstring + ' added to known nicks' )
 
 
 	if command in [ 'quit' ]:
