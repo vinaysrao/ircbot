@@ -1,5 +1,6 @@
 # Copyright (C) 2012 Vinay.S.Rao <sr.vinay@gmail.com>
 # Copyright (C) 2012 Deepak Mittal <dpac.mittal2@gmail.com>
+# Copyright (C) 2012 Shantanu Tushar <shantanu@kde.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +33,7 @@ def action( bot, line, socket ):
 
 
 def command( bot, line, socket ):
-	#This is run if the bot's command symbol, by default '$' is found
+	#This is run if the bot's command symbol, by default '!' is found
 	command, commandstring = bot.getCmdAndCmdString( line )
 	command = command.lower()
 	if command == '':
@@ -54,6 +55,9 @@ def command( bot, line, socket ):
 		msg += '\'  \''
 		bot.privmsg( msg )
 
+	if command in [ 'quit' ]:
+		from sys import exit
+		exit (0)
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:

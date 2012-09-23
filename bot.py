@@ -32,7 +32,10 @@ class IRCBot:
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
-        self.nameslist = []
+
+	f = open('known_nicks.txt', 'r')
+	self.nameslist = map((lambda foo: foo.strip()), f.readlines())
+	f.close()
         
         self.initConnection()
     
@@ -110,18 +113,13 @@ class IRCBot:
         #string as its members
         line = self.getMsg( line )
         if line[ 0 ] != self.symbol:
-            return ( '', '' )
-        command = line[ 1: ].split()[ 0 ]
-        if command == '':
-            return ( '', '' )
-        end = re.search( command, line )
-        if end:
-            end = end.end() + 1
-            if end >= len( line ):
-                return ( command, '' )
-            commandstring = line[ end: ]
-            return ( command, commandstring )
+            return ( '' , '' )
 
+        m = re.match( r'!(.+?)\b\s?(.*)$' , line )
+        if m:
+            return m.groups( '' )
+        else:
+            return ( '' , '' )
 
     def setChannelTopic( self, channeltopic ):
         self.channeltopic = channeltopic
@@ -133,7 +131,7 @@ class IRCBot:
 
 
 if __name__ == "__main__":
-    bot = IRCBot()
+    bot = IRCBot( )
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
