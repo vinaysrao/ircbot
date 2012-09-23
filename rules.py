@@ -55,10 +55,20 @@ def command( bot, line, socket ):
 		msg += '\'  \''
 		bot.privmsg( msg )
 
+	if command in [ 'addnick' ]:
+		nick = bot.getnick()
+		if commandstring == '' or ' ' in commandstring:
+			return
+		if not isNewNick( nick, bot.nameslist ):
+			bot.addKnownNick( commandstring )
+
+
 	if command in [ 'quit' ]:
+		bot.serializeNicks()
 		__import__( 'sys' ).exit( 0 )
 
 	if command in [ 'restart' ]:
+		bot.serializeNicks()
 		__import__( 'sys' ).exit( 1 )
 
 def nameList( bot, line, socket ):
@@ -86,13 +96,13 @@ def join( bot, line, socket ):
 	if nick:
 		nick = nick.group( 1 )
 		if isNewNick( nick, bot.nameslist ) and nick != bot.nick:
-			bot.addNames( [ nick ] )
 			msg = nick + ': '
 			msg += 'Hi! Looks like you\'re new here. This is the IRC Channel of the \"BMS - Libre User Group\".'
 			bot.privmsg( msg )
 			msg = nick + ': '
 			msg +=  'If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
 			bot.privmsg( msg )
+			bot.addNames( [ nick ] )
 
 
 def prependNick( bot, nick ):

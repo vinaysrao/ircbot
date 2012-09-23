@@ -125,7 +125,18 @@ class IRCBot:
 
 
     def addNames( self, nameslist ):
-        self.activeNickList.extend( nameslist )
+        self.activeNickList.extend( [ i for i in nameslist if i not in self.activeNickList ] )
+
+
+    def addKnownNick( self, nick ):
+        self.nameslist.append( nick )
+
+
+    def serializeNicks( self ):
+        file = open( 'known_nicks.txt', 'w' )
+        for i in self.nameslist:
+            file.write( i + '\n' )
+        file.close()
 
 
 
