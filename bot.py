@@ -16,6 +16,7 @@
 
 import socket
 import re
+import sys
 import rules
 import time
 
@@ -34,6 +35,7 @@ class IRCBot:
         self.socket = socket.socket()
         self.maxlength = 2048
         self.timer = time.time()
+        self.refreshed = False
 
     	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
         self.activeNickList = []
@@ -42,13 +44,16 @@ class IRCBot:
     
     
     def initConnection( self ):
-        self.socket.connect( ( self.host, self.port ) )
-        self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
-        self.socket.send( "NICK " + self.nick + "\r\n" )
-        self.socket.send( "JOIN " + self.channel + "\r\n" )
+        try:
+            self.socket.connect( ( self.host, self.port ) )
+            self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
+            self.socket.send( "NICK " + self.nick + "\r\n" )
+            self.socket.send( "JOIN " + self.channel + "\r\n" )
+        except:
+            print sys.exc_info()[0]
         
         
-    def nicklist( self ):
+    def getnicklist( self ):
         self.socket.send( "NAMES " + self.channel + "\r\n" )
         #Implement parsing this
         
@@ -135,7 +140,8 @@ class IRCBot:
 
 
     def addKnownNick( self, nick ):
-        self.nameslist.append( nick )
+        if rules.isNewNick( nick, self.nameslist ):
+            self.nameslist.append( nick )
 
 
     def serializeNicks( self ):

@@ -56,12 +56,14 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'addnick' ]:
-		nick = bot.getnick()
-		if commandstring == '' or ' ' in commandstring:
+		nick = bot.getnick( line )
+		isOP( bot, nick )
+		print commandstring
+		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
 		if not isNewNick( nick, bot.nameslist ):
 			bot.addKnownNick( commandstring )
-			bot.privmsg( commandstring + !' added to known nicks' )
+			bot.privmsg( commandstring + ' added to known nicks' )
 
 
 	if command in [ 'quit' ]:
@@ -74,6 +76,7 @@ def command( bot, line, socket ):
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
+		bot.activeNickList = []
 		msg = bot.getMsg( line )
 		nameslist = []
 		for i in msg.split():
@@ -120,3 +123,12 @@ def isNewNick( nick, nameslist ):
 		if re.match( '[@,_]?' + i + '_?', nick ):
 			return False
 	return True
+
+
+def isOP( bot, nick ):
+	refreshList( bot )
+	print bot.activeNickList
+
+
+def refreshList( bot ):
+	bot.getnicklist()
