@@ -34,6 +34,7 @@ def action( bot, line, socket ):
 def command( bot, line, socket ):
 	#This is run if the bot's command symbol, by default '$' is found
 	command, commandstring = bot.getCmdAndCmdString( line )
+	command = command.lower()
 	if command == '':
 		return
 	if command in [ 'say', 'echo' ]:
