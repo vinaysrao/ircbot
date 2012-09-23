@@ -106,6 +106,6 @@ def prependNick( bot, nick ):
 def isNewNick( nick, nameslist ):
 	import re
 	for i in nameslist:
-		if re.match( '_?' + nick + '_?', i ):
+		if re.match( '_?' + i + '_?', nick ):
 			return False
 	return True

@@ -34,6 +34,7 @@ class IRCBot:
         self.maxlength = 2048
 
     	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
+        self.activeNickList = []
         
         self.initConnection()
     
@@ -124,12 +125,12 @@ class IRCBot:
 
 
     def addNames( self, nameslist ):
-        self.nameslist.extend( nameslist )
+        self.activeNickList.extend( nameslist )
 
 
 
 if __name__ == "__main__":
-    bot = IRCBot( )
+    bot = IRCBot()
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
