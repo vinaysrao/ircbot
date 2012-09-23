@@ -85,7 +85,7 @@ def join( bot, line, socket ):
 	nick = re.search( ':(.*)!', line )
 	if nick:
 		nick = nick.group( 1 )
-		if nick not in bot.nameslist and nick != bot.nick:
+		if isNewNick( nick, bot.nameslist ) and nick != bot.nick:
 			bot.addNames( [ nick ] )
 			msg = nick + ': '
 			msg += 'Hi! Looks like you\'re new here. This is the IRC Channel of the \"BMS - Libre User Group\".'
@@ -101,3 +101,11 @@ def prependNick( bot, nick ):
 	else:
 		msg = ''
 	return msg
+
+
+def isNewNick( nick, nameslist ):
+	import re
+	for i in nameslist:
+		if re.match( '_?' + nick + '_?', i ):
+			return False
+	return True
