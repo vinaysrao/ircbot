@@ -28,7 +28,7 @@ def pong( bot, line, socket ):
 
 
 def action( bot, line, socket ):
-	if 'kick' in line.lower():
+	if 'kick' in line.lower() and bot.nick in line:
 		bot.privmsg( 'Ow' )
 
 
@@ -61,7 +61,7 @@ def command( bot, line, socket ):
 			return
 		if not isNewNick( nick, bot.nameslist ):
 			bot.addKnownNick( commandstring )
-			bot.privmsg( commandstring + ' added to known nicks' )
+			bot.privmsg( commandstring + !' added to known nicks' )
 
 
 	if command in [ 'quit' ]:
