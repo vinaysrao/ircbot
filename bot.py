@@ -17,6 +17,7 @@
 import socket
 import re
 import rules
+import time
 
 class IRCBot:
     #A simple IRC Bot that pongs et all
@@ -32,6 +33,7 @@ class IRCBot:
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
+        self.timer = time.time()
 
     	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
         self.activeNickList = []
@@ -58,6 +60,9 @@ class IRCBot:
 
     def run( self ):
         while True:
+            if time.time() - self.timer > 180: #Tries to reconnect to server on loss of connectivity
+                self.initConnection()
+
             lines = self.readlines()
             for line in lines:
                 print line
@@ -81,6 +86,7 @@ class IRCBot:
     
     def pongToServer( self, msg ):
         #Check if "PING :" is in 'line' and call pongToServer
+        self.timer = time.time()
         pingcmd = msg.split( ":", 1 )
         pingmsg = pingcmd[ 1 ]
         self.socket.send( "PONG :" + pingmsg + "\r\n" )
