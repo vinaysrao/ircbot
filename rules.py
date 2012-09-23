@@ -56,8 +56,10 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'quit' ]:
-		from sys import exit
-		exit (0)
+		__import__( 'sys' ).exit( 0 )
+
+	if command in [ 'restart' ]:
+		__import__( 'sys' ).exit( 1 )
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
