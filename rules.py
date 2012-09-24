@@ -87,7 +87,6 @@ def nameList( bot, line, socket ):
 				break
 			nameslist.append( i )
 		bot.addNames( nameslist )
-		bot.setRefreshed( True )
 
 
 def topic( bot, line, socket ):

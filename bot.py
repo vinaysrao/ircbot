@@ -19,9 +19,8 @@ import re
 import sys
 import rules
 import time
-import threading
 
-class IRCBot( threading.Thread ):
+class IRCBot():
     #A simple IRC Bot that pongs et all
     #Requires a call to 'run' to start
     lastline = ''
@@ -37,7 +36,6 @@ class IRCBot( threading.Thread ):
         self.socket = socket.socket()
         self.maxlength = 2048
         self.timer = time.time()
-        self.refreshed = False
 
     	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
         self.activeNickList = []
@@ -153,17 +151,6 @@ class IRCBot( threading.Thread ):
         file.close()
 
 
-    def refreshList( self ):
-        self.activeNickList = []
-        self.refreshed = False
-        self.getnicklist()
-        # while not self.refreshed:
-        #     continue
-
-    def setRefreshed( self, value ):
-        self.refreshed = value
-
-
 
 if __name__ == "__main__":
     bot = IRCBot( nick = 'bmsbotbot' )
@@ -174,4 +161,4 @@ if __name__ == "__main__":
     bot.addrule( bot.symbol, rules.command )
     bot.addrule( '353', rules.nameList )
     bot.addrule( '332', rules.topic )
-    bot.start()
+    bot.run()
