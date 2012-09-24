@@ -52,7 +52,7 @@ def command( bot, line, socket ):
 
 	if command in [ 'god' ]:
 		msg = prependNick( bot, commandstring )
-		msg += 'https://www.youtube.com/watch?v=Gi257HIQrD0'
+		msg += 'http://www.youtube.com/watch?v=8nAos1M-_Ts'
 		bot.privmsg( msg )
 
 	if command in [ 'addnick' ]:
