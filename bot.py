@@ -19,13 +19,15 @@ import re
 import sys
 import rules
 import time
+import threading
 
-class IRCBot:
+class IRCBot( threading.Thread ):
     #A simple IRC Bot that pongs et all
     #Requires a call to 'run' to start
     lastline = ''
     rules = {}
     def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsbot', port = 6667, symbol = '!' ):
+        threading.Thread.__init__( self )
         self.host = host
         self.channel = channel
         self.nick = nick
@@ -50,7 +52,7 @@ class IRCBot:
             self.socket.send( "NICK " + self.nick + "\r\n" )
             self.socket.send( "JOIN " + self.channel + "\r\n" )
         except:
-            print sys.exc_info()[0]
+            print sys.exc_info()[ 0 ]
         
         
     def getnicklist( self ):
@@ -151,9 +153,20 @@ class IRCBot:
         file.close()
 
 
+    def refreshList( self ):
+        self.activeNickList = []
+        self.refreshed = False
+        self.getnicklist()
+        # while not self.refreshed:
+        #     continue
+
+    def setRefreshed( self, value ):
+        self.refreshed = value
+
+
 
 if __name__ == "__main__":
-    bot = IRCBot()
+    bot = IRCBot( nick = 'bmsbotbot' )
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
@@ -161,4 +174,4 @@ if __name__ == "__main__":
     bot.addrule( bot.symbol, rules.command )
     bot.addrule( '353', rules.nameList )
     bot.addrule( '332', rules.topic )
-    bot.run()
+    bot.start()

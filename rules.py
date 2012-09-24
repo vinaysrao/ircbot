@@ -87,6 +87,7 @@ def nameList( bot, line, socket ):
 				break
 			nameslist.append( i )
 		bot.addNames( nameslist )
+		bot.setRefreshed( True )
 
 
 def topic( bot, line, socket ):
@@ -126,9 +127,5 @@ def isNewNick( nick, nameslist ):
 
 
 def isOP( bot, nick ):
-	refreshList( bot )
+	bot.refreshList()
 	print bot.activeNickList
-
-
-def refreshList( bot ):
-	bot.getnicklist()
