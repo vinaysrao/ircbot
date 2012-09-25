@@ -26,7 +26,6 @@ class IRCBot():
     lastline = ''
     rules = {}
     def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsbot', port = 6667, symbol = '!' ):
-        threading.Thread.__init__( self )
         self.host = host
         self.channel = channel
         self.nick = nick
