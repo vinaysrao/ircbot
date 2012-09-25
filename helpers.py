@@ -14,23 +14,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
+
 def readNicksFromFile( filename ):
-	return [ f for f in open( filename ) ]
+	return [ f.strip() for f in open( filename ) ]
 
 
 def serializeNicks( filename, nameslist ):
 	file = open( filename, 'w' )
-	for i in nameslist:
-        file.write( i + '\n' )
-    file.close()
+	for i in nameslist: file.write( i + '\n' )
+	file.close()
 
 
 def getnick( user ):
-        m = re.match( ":(.*?)!~", user )
-        if m:
-            return m.group( 1 )
-        else:
-            return False
+    m = re.match( ":(.*?)!~", user )
+    if m:
+        return m.group( 1 )
+    else:
+        return False
 
 
 def getMsg( line ):
@@ -40,7 +42,7 @@ def getMsg( line ):
     return x[ 2 ] 
 
 
-def getCmdAndCmdString( self, line ):
+def getCmdAndCmdString( line ):
     #Returns a tuple, containing the command and the command
     #string as its members
     line = getMsg( line )
@@ -62,7 +64,7 @@ def isNewNick( nick, nameslist ):
 	import re
 	print nick, nameslist
 	for i in nameslist:
-		if re.match( '[@,_]?' + i + '_?', nick ):
+		if re.match( '[@,_]?(' + i + ')?_?$', nick ):
 			return False
 	return True
 
