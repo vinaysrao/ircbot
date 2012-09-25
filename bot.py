@@ -122,16 +122,3 @@ class IRCBot():
     def serializeNicks( self ):
         helpers.serializeNicks( 'known_nicks.txt', self.namelist )
         helpers.serializeNicks( 'admins.txt', self.admins )
-
-
-
-if __name__ == "__main__":
-    bot = IRCBot()
-    bot.addrule( 'PRIVMSG', rules.privmsg )
-    bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
-    bot.addrule( 'ACTION', rules.action )
-    bot.addrule( 'JOIN', rules.join )
-    bot.addrule( bot.symbol, rules.command )
-    bot.addrule( '353', rules.nameList )
-    bot.addrule( '332', rules.topic )
-    bot.run()
