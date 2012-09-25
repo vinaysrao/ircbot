@@ -64,6 +64,10 @@ def command( bot, line, socket ):
 			if bot.addKnownNick( commandstring ):
 				bot.privmsg( commandstring + ' added to known nicks' )
 
+	if command in [ 'kick' ]:
+		msg = "ACTION kicks " + commandstring
+		bot.privmsg( msg )
+
 
 	if command in [ 'quit' ]:
 		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
