@@ -66,12 +66,12 @@ def command( bot, line, socket ):
 
 
 	if command in [ 'quit' ]:
-		if( helpers.isAdmin( bot, helpers.getnick( bot, line ) ) ):
+		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
 			bot.serializeNicks()
 			__import__( 'sys' ).exit( 0 )
 
 	if command in [ 'restart' ]:
-		if( helpers.isAdmin( bot, helpers.getnick( bot, line ) ) ):
+		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
 			bot.serializeNicks()
 			__import__( 'sys' ).exit( 1 )
 
