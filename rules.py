@@ -65,7 +65,7 @@ def command( bot, line, socket ):
 				bot.privmsg( commandstring + ' added to known nicks' )
 
 	if command in [ 'kick' ]:
-		msg = "ACTION kicks " + commandstring
+		msg = "/me kicks " + commandstring
 		bot.privmsg( msg )
 
 
