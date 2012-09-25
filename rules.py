@@ -19,7 +19,7 @@ import helpers
 
 def privmsg( bot, line, socket ):
     if 'ping' in line.lower() and bot.nick in line:
-        nick = helpers.getnick( line.split() [ 0 ] )
+        nick = helpers.getnick( line.split()[ 0 ] )
         if nick:
             bot.privmsg( nick  + ': Pong' )
 
@@ -43,16 +43,16 @@ def command( bot, line, socket ):
 		bot.privmsg( commandstring )
 
 	if command in [ 'topic' ]:
-		msg = prependNick( bot, commandstring )
+		msg = helpers.prependNick( commandstring )
 		bot.privmsg( msg + "Topic is: " + bot.channeltopic )
 
 	if command in [ 'yourcode' ]:
-		msg = prependNick( bot, commandstring )
+		msg = helpers.prependNick( commandstring )
 		msg += 'https://github.com/vinaysrao/ircbot.git'
 		bot.privmsg( msg )
 
 	if command in [ 'god' ]:
-		msg = prependNick( bot, commandstring )
+		msg = helpers.prependNick( commandstring )
 		msg += 'http://www.youtube.com/watch?v=8nAos1M-_Ts'
 		bot.privmsg( msg )
 
@@ -60,18 +60,20 @@ def command( bot, line, socket ):
 		nick = helpers.getnick( line )
 		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
-		if not isNewNick( nick, bot.nameslist ):
+		if not helpers.isNewNick( nick, bot.nameslist ):
 			if bot.addKnownNick( commandstring ):
 				bot.privmsg( commandstring + ' added to known nicks' )
 
 
 	if command in [ 'quit' ]:
-		bot.serializeNicks()
-		__import__( 'sys' ).exit( 0 )
+		if( isAdmin( helpers.getnick( bot, line ) ) ):
+			bot.serializeNicks()
+			__import__( 'sys' ).exit( 0 )
 
 	if command in [ 'restart' ]:
-		bot.serializeNicks()
-		__import__( 'sys' ).exit( 1 )
+		if( isAdmin( helpers.getnick( bot, line ) ) ):
+			bot.serializeNicks()
+			__import__( 'sys' ).exit( 1 )
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
@@ -98,7 +100,7 @@ def join( bot, line, socket ):
 	nick = re.search( ':(.*)!', line )
 	if nick:
 		nick = nick.group( 1 )
-		if isNewNick( nick, bot.nameslist ) and nick != bot.nick:
+		if helpers.isNewNick( nick, bot.nameslist ) and nick != bot.nick:
 			msg = nick + ': '
 			msg += 'Hi! Looks like you\'re new here. This is the IRC Channel of the \"BMS - Libre User Group\".'
 			bot.privmsg( msg )
@@ -106,20 +108,3 @@ def join( bot, line, socket ):
 			msg +=  'If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
 			bot.privmsg( msg )
 			bot.addNames( [ nick ] )
-
-
-def prependNick( bot, nick ):
-	return nick + ': '
-
-
-def isNewNick( nick, nameslist ):
-	import re
-	print nick, nameslist
-	for i in nameslist:
-		if re.match( '[@,_]?' + i + '_?', nick ):
-			return False
-	return True
-
-
-def isAdmin( bot, nick ):
-	

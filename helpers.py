@@ -1,4 +1,5 @@
 # Copyright (C) 2012 Vinay.S.Rao <sr.vinay@gmail.com>
+# Copyright (C) 2012 Deepak Mittal <dpac.mittal2@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,3 +52,22 @@ def getCmdAndCmdString( self, line ):
         return m.groups( '' )
     else:
         return ( '' , '' )
+
+
+def prependNick( nick ):
+	return nick + ': '
+
+
+def isNewNick( nick, nameslist ):
+	import re
+	print nick, nameslist
+	for i in nameslist:
+		if re.match( '[@,_]?' + i + '_?', nick ):
+			return False
+	return True
+
+
+def isAdmin( bot, nick ):
+	if nick in bot.admins:
+		return True
+	return False

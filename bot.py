@@ -113,7 +113,7 @@ class IRCBot():
 
 
     def addKnownNick( self, nick ):
-        if rules.isNewNick( nick, self.nameslist ):
+        if helpers.isNewNick( nick, self.nameslist ):
             self.nameslist.append( nick )
             return True
         return False
