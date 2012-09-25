@@ -75,6 +75,11 @@ def command( bot, line, socket ):
 			bot.serializeNicks()
 			__import__( 'sys' ).exit( 1 )
 
+	if command in [ 'list' ]:
+		msg = helpers.prependNick( commandstring )
+		msg += ', '.join( helpers.commandList() )
+		bot.privmsg( msg )
+
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
 		bot.activeNickList = []
