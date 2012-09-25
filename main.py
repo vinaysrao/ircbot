@@ -1,4 +1,5 @@
 import bot
+import rules
 
 if __name__ == "__main__":
     bot = IRCBot()
