@@ -119,11 +119,8 @@ def isNewNick( nick, nameslist ):
 		if re.match( '[@,_]?' + i + '_?', nick ):
 			return False
 	return True
-<<<<<<< HEAD
 
 
 def isOP( bot, nick ):
 	bot.refreshList()
 	print bot.activeNickList
-=======
->>>>>>> 006d001b53554fc0bce300a1e525d313735b6311
