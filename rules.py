@@ -60,7 +60,7 @@ def command( bot, line, socket ):
 		nick = helpers.getnick( line )
 		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
-		if not helpers.isNewNick( nick, bot.nameslist ):
+		if helpers.isAdmin( bot, nick ):
 			if bot.addKnownNick( commandstring ):
 				bot.privmsg( commandstring + ' added to known nicks' )
 
