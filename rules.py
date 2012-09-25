@@ -57,7 +57,6 @@ def command( bot, line, socket ):
 
 	if command in [ 'addnick' ]:
 		nick = bot.getnick( line )
-		isOP( bot, nick )
 		print commandstring
 		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
