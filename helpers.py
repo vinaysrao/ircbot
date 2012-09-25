@@ -62,7 +62,6 @@ def prependNick( nick ):
 
 def isNewNick( nick, nameslist ):
 	import re
-	print nick, nameslist
 	for i in nameslist:
 		if re.match( '[@,_]?(' + i + ')?_?$', nick ):
 			return False
