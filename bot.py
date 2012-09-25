@@ -126,7 +126,7 @@ class IRCBot():
 
 
 if __name__ == "__main__":
-    bot = IRCBot( nick = 'bmsbotbot' )
+    bot = IRCBot()
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
     bot.addrule( 'ACTION', rules.action )
