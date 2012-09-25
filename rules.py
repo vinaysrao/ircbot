@@ -110,11 +110,7 @@ def join( bot, line, socket ):
 
 
 def prependNick( bot, nick ):
-	if nick != '' and nick in bot.nameslist:
-		msg = nick + ': '
-	else:
-		msg = ''
-	return msg
+	return nick + ': '
 
 
 def isNewNick( nick, nameslist ):
