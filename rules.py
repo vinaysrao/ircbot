@@ -57,12 +57,11 @@ def command( bot, line, socket ):
 
 	if command in [ 'addnick' ]:
 		nick = bot.getnick( line )
-		print commandstring
 		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
 		if not isNewNick( nick, bot.nameslist ):
-			bot.addKnownNick( commandstring )
-			bot.privmsg( commandstring + ' added to known nicks' )
+			if bot.addKnownNick( commandstring ):
+				bot.privmsg( commandstring + ' added to known nicks' )
 
 
 	if command in [ 'quit' ]:
@@ -114,6 +113,7 @@ def prependNick( bot, nick ):
 
 def isNewNick( nick, nameslist ):
 	import re
+	print nick, nameslist
 	for i in nameslist:
 		if re.match( '[@,_]?' + i + '_?', nick ):
 			return False
