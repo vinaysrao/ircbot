@@ -19,7 +19,7 @@ import re
 def commandList():
 	commands = [ 'say', 'echo', 'topic', 'yourcode', 'addnick', 'quit', 'restart', 'list' ]
 	return commands
-	
+
 
 def readNicksFromFile( filename ):
 	return [ f.strip() for f in open( filename ) ]
@@ -61,7 +61,7 @@ def getCmdAndCmdString( line ):
 
 
 def prependNick( nick ):
-	return nick + ': '
+	return '' if nick == '' else nick + ': '
 
 
 def isNewNick( nick, nameslist ):
