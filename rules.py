@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import helpers
 
 def privmsg( bot, line, socket ):
     if 'ping' in line.lower() and bot.nick in line:
-        nick = bot.getnick( line.split() [ 0 ] )
+        nick = helpers.getnick( line.split() [ 0 ] )
         if nick:
             bot.privmsg( nick  + ': Pong' )
 
@@ -34,7 +35,7 @@ def action( bot, line, socket ):
 
 def command( bot, line, socket ):
 	#This is run if the bot's command symbol, by default '!' is found
-	command, commandstring = bot.getCmdAndCmdString( line )
+	command, commandstring = helpers.getCmdAndCmdString( line )
 	command = command.lower()
 	if command == '':
 		return
@@ -56,7 +57,7 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'addnick' ]:
-		nick = bot.getnick( line )
+		nick = helpers.getnick( line )
 		if commandstring == '' or len( commandstring.split() ) > 1:
 			return
 		if not isNewNick( nick, bot.nameslist ):
@@ -75,7 +76,7 @@ def command( bot, line, socket ):
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
 		bot.activeNickList = []
-		msg = bot.getMsg( line )
+		msg = helpers.getMsg( line )
 		nameslist = []
 		for i in msg.split():
 			if i == bot.nick:
@@ -88,7 +89,7 @@ def nameList( bot, line, socket ):
 
 
 def topic( bot, line, socket ):
-	msg = bot.getMsg( line )
+	msg = helpers.getMsg( line )
 	bot.setChannelTopic( msg )
 
 
@@ -120,6 +121,5 @@ def isNewNick( nick, nameslist ):
 	return True
 
 
-def isOP( bot, nick ):
-	bot.refreshList()
-	print bot.activeNickList
+def isAdmin( bot, nick ):
+	

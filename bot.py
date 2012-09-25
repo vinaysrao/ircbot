@@ -18,6 +18,7 @@ import socket
 import re
 import sys
 import rules
+import helpers
 import time
 
 class IRCBot():
@@ -36,7 +37,8 @@ class IRCBot():
         self.maxlength = 2048
         self.timer = time.time()
 
-    	self.nameslist = [ f.strip() for f in open( 'known_nicks.txt' ) ]
+    	self.nameslist = helpers.readNicksFromFile( 'known_nicks.txt' )
+        self.admins = helpers.readNicksFromFile( 'admins.txt' )
         self.activeNickList = []
         
         self.initConnection()
@@ -102,34 +104,6 @@ class IRCBot():
         self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
 
     
-    def getnick( self, user ):
-        m = re.match( ":(.*?)!~", user )
-        if m:
-            return m.group( 1 )
-        else:
-            return False
-
-
-    def getMsg( self, line ):
-        x = line.split( ':', 2 )
-        if len( x ) < 3:
-            return ' '
-        return x[ 2 ] 
-
-
-    def getCmdAndCmdString( self, line ):
-        #Returns a tuple, containing the command and the command
-        #string as its members
-        line = self.getMsg( line )
-        if line[ 0 ] != self.symbol:
-            return ( '' , '' )
-
-        m = re.match( r'!(.+?)\b\s?(.*)$' , line )
-        if m:
-            return m.groups( '' )
-        else:
-            return ( '' , '' )
-
     def setChannelTopic( self, channeltopic ):
         self.channeltopic = channeltopic
 
@@ -146,10 +120,8 @@ class IRCBot():
 
 
     def serializeNicks( self ):
-        file = open( 'known_nicks.txt', 'w' )
-        for i in self.nameslist:
-            file.write( i + '\n' )
-        file.close()
+        helpers.serializeNicks( 'known_nicks.txt', self.namelist )
+        helpers.serializeNicks( 'admins.txt', self.admins )
 
 
 
