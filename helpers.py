@@ -17,7 +17,7 @@
 import re
 
 def commandList():
-	commands = [ 'say', 'echo', 'topic', 'yourcode', 'addnick', 'quit', 'restart', 'list', 'kick' ]
+	commands = [ 'say', 'echo', 'topic', 'yourcode', 'addnick', 'god', 'quit', 'restart', 'list', 'kick' ]
 	return commands
 
 
