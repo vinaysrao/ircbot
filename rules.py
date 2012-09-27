@@ -32,6 +32,10 @@ def action( bot, line, socket ):
 	if 'kick' in line.lower() and bot.nick in line:
 		bot.privmsg( 'Ow' )
 
+	if 'hugs' in line.lower() and bot.nick in line:
+		msg = chr( 1 ) + "ACTION hugs " + helpers.getnick( line ) + chr( 1 )
+		bot.privmsg( msg )
+
 
 def command( bot, line, socket ):
 	#This is run if the bot's command symbol, by default '!' is found
