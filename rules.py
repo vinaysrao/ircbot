@@ -36,6 +36,12 @@ def action( bot, line, socket ):
 		msg = chr( 1 ) + "ACTION hugs " + helpers.getnick( line ) + chr( 1 )
 		bot.privmsg( msg )
 
+	if 'kills' in line.lower() and bot.nick in line:
+		msg = chr( 1 ) + "ACTION is sad." + chr( 1 )
+		bot.privmsg( msg )
+		msg = helpers.getnick( line ) + ': :('
+		bot.privmsg( msg )
+
 
 def command( bot, line, socket ):
 	#This is run if the bot's command symbol, by default '!' is found
