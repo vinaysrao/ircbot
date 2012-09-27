@@ -37,9 +37,9 @@ def action( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if 'kills' in line.lower() and bot.nick in line:
-		msg = chr( 1 ) + "ACTION is sad." + chr( 1 )
+		msg = chr( 1 ) + "ACTION is a zombie." + chr( 1 )
 		bot.privmsg( msg )
-		msg = helpers.getnick( line ) + ': :('
+		msg = helpers.getnick( line ) + ': X|'
 		bot.privmsg( msg )
 
 
