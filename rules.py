@@ -42,6 +42,10 @@ def action( bot, line, socket ):
 		msg = helpers.getnick( line ) + ': X|'
 		bot.privmsg( msg )
 
+	if 'yawns' in line.lower():
+		msg = chr( 1 ) + "ACTION yawns" + chr( 1 )
+		bot.privmsg( msg )
+
 
 def command( bot, line, socket ):
 	#This is run if the bot's command symbol, by default '!' is found
