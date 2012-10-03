@@ -26,10 +26,11 @@ class IRCBot():
     #Requires a call to 'run' to start
     lastline = ''
     rules = {}
-    def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsb0t', port = 6667, symbol = '!' ):
+    def __init__( self, password, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsb0t', port = 6667, symbol = '!' ):
         self.host = host
         self.channel = channel
         self.nick = nick
+	self.password = password
         self.port = port
         self.symbol = symbol
         self.channeltopic = ''
@@ -49,6 +50,7 @@ class IRCBot():
             self.socket.connect( ( self.host, self.port ) )
             self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
             self.socket.send( "NICK " + self.nick + "\r\n" )
+            self.socket.send( "PRIVMSG NICKSERV IDENTIFY " + self.password + "\r\n" )
             self.socket.send( "JOIN " + self.channel + "\r\n" )
         except:
             print sys.exc_info()[ 0 ]

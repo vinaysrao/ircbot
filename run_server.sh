@@ -5,7 +5,7 @@ echo "Press any key to continue, or Ctrl+C to exit"
 read userinput
 
 while [ true ]; do
-        python main.py
+        python main.py $@
         if [ $? -eq 0 ]; then
                 exit 0
         fi
