@@ -112,9 +112,6 @@ def nameList( bot, line, socket ):
 			nameslist.append( i )
 		bot.addNames( nameslist )
 
-def sendPassword( bot, line, socket):
-	bot.privmsg('/msg NickServ identify ' + bot.password)
-
 
 def topic( bot, line, socket ):
 	msg = helpers.getMsg( line )
