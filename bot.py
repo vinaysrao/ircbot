@@ -30,7 +30,7 @@ class IRCBot():
         self.host = host
         self.channel = channel
         self.nick = nick
-	self.password = password
+        self.password = password
         self.port = port
         self.symbol = symbol
         self.channeltopic = ''
