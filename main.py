@@ -29,6 +29,7 @@ if __name__ == "__main__":
     bot.addrule( bot.symbol, rules.command )
     bot.addrule( '353', rules.nameList )
     bot.addrule( '332', rules.topic )
+    bot.addrule( 'This nickname is registered', rules.sendPassword)
     #--END-- of main rules
     #Add custom rules below
     bot.run()
