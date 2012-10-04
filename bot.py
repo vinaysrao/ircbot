@@ -127,5 +127,5 @@ class IRCBot():
 
 
     def serializeNicks( self ):
-        helpers.serializeNicks( 'known_nicks.txt', self.namelist )
+        helpers.serializeNicks( 'known_nicks.txt', self.nameslist )
         helpers.serializeNicks( 'admins.txt', self.admins )
