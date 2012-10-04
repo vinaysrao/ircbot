@@ -70,7 +70,7 @@ class IRCBot():
         while True:
             if time.time() - self.timer > 180: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
-                __import__( 'sys' ).exit( 0 )
+                __import__( 'sys' ).exit( 1 )
 
             lines = self.readlines()
             for line in lines:
