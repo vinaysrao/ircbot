@@ -91,6 +91,9 @@ def command( bot, line, socket ):
 		else:
 			query = query[ 0 ]
 			msg = ''
+		if query == '':
+			return
+		query = '+'.join( query.split() )
 		url = 'http://www.lmgtfy.com/?q=' + query
 		msg += url
 		bot.privmsg( msg )
