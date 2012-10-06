@@ -20,7 +20,7 @@ import rules
 import sys
 
 if __name__ == "__main__":
-    bot = bot.IRCBot( password = sys.argv[ 1 ], nick = 'bmsbotbot' )
+    bot = bot.IRCBot( password = sys.argv[ 1 ], nick = 'bmsb0t' )
     #--START-- of main rules
     bot.addrule( 'PRIVMSG', rules.privmsg )
     bot.addrule( 'PING :', rules.pong ) #Special case, to pong back to the server only
