@@ -83,6 +83,17 @@ def command( bot, line, socket ):
 		msg = chr( 1 ) + "ACTION kicks " + commandstring + chr( 1 )
 		bot.privmsg( msg )
 
+	if command in [ 'lmgtfy' ]:
+		query = commandstring.split( ' ', 1 )
+		if len( query ) > 1:
+			nick, query = query[ 0 ], query[ 1 ]
+			msg = nick + ': '
+		else:
+			msg = ''
+		url = 'http://www.lmgtfy.com/?q=' + query
+		msg += url
+		bot.privmsg( msg )
+
 
 	if command in [ 'quit' ]:
 		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
