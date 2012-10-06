@@ -89,6 +89,7 @@ def command( bot, line, socket ):
 			nick, query = query[ 0 ], query[ 1 ]
 			msg = nick + ': '
 		else:
+			query = query[ 0 ]
 			msg = ''
 		url = 'http://www.lmgtfy.com/?q=' + query
 		msg += url

@@ -20,7 +20,6 @@ import sys
 import rules
 import helpers
 import time
-import aiml
 
 class IRCBot():
     #A simple IRC Bot that pongs et all
