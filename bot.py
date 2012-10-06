@@ -38,9 +38,6 @@ class IRCBot():
         self.socket = socket.socket()
         self.maxlength = 2048
         self.timer = time.time()
-        self.brain = aiml.Kernel()
-        self.brain.learn( 'std-startup.xml' )
-        self.brain.respond( 'load aiml b' )
 
     	self.nameslist = helpers.readNicksFromFile( 'known_nicks.txt' )
         self.admins = helpers.readNicksFromFile( 'admins.txt' )
