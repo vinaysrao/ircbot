@@ -98,12 +98,14 @@ class IRCBot():
         self.timer = time.time()
         pingcmd = msg.split( ":", 1 )
         pingmsg = pingcmd[ 1 ]
+        print "PONG :" + pingmsg
         self.socket.send( "PONG :" + pingmsg + "\r\n" )
 
 
     def privmsg( self, msg ):
         if msg == '':
             return
+        print msg
         self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
 
     def privmsguser( self, user, msg):
