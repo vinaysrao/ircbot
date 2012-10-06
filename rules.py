@@ -16,12 +16,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import helpers
+import sys
 
 def privmsg( bot, line, socket ):
     if 'ping' in line.lower() and bot.nick in line:
         nick = helpers.getnick( line.split()[ 0 ] )
         if nick:
             bot.privmsg( nick  + ': Pong' )
+    if bot.nick in line:
+    	nick = helpers.getnick( line )
+    	try:
+    		response = bot.brain.respond( helpers.getMsg( line ) )
+    		bot.privmsg( nick + ': ' + response )
+    	except:
+    		print sys.exc_info()[ 0 ]
+    		pass
 
 
 def pong( bot, line, socket ):
