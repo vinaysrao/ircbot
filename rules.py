@@ -84,15 +84,16 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'lmgtfy' ]:
-		query = commandstring.split( ' ', 1 )
-		if len( query ) > 1:
-			nick, query = query[ 0 ], query[ 1 ]
-			msg = nick + ': '
-		else:
-			query = query[ 0 ]
-			msg = ''
-		if query == '':
+		if commandstring == '':
 			return
+		query = commandstring.split( ' ', 1 )
+		if helpers.isNewNick( query[ 0 ], bot.activeNickList ):
+			msg = ''
+			query = '+'.join( query )
+		else:
+			msg = query[ 0 ] + ' :'
+			query = '+'.join( query[ 1: ] )
+
 		query = '+'.join( query.split() )
 		url = 'http://www.lmgtfy.com/?q=' + query
 		msg += url
