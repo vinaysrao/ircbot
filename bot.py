@@ -68,7 +68,7 @@ class IRCBot():
 
     def run( self ):
         while True:
-            if time.time() - self.timer > 180: #Tries to reconnect to server on loss of connectivity
+            if time.time() - self.timer > 256: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
                 __import__( 'sys' ).exit( 1 )
 
