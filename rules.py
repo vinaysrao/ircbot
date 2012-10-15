@@ -91,7 +91,7 @@ def command( bot, line, socket ):
 			msg = ''
 			query = '+'.join( query )
 		else:
-			msg = query[ 0 ] + ' :'
+			msg = query[ 0 ] + ': '
 			query = '+'.join( query[ 1: ] )
 
 		query = '+'.join( query.split() )
