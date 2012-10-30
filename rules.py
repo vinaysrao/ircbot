@@ -99,6 +99,15 @@ def command( bot, line, socket ):
 		msg += url
 		bot.privmsg( msg )
 
+	if command in [ 'define' ]:
+		from nltk.corpus import wordnet
+		s = wordnet.synsets( commandstring )
+		try:
+			msg = s[ 0 ].definition.capitalize()
+		except:
+			msg = 'Definition not found'
+		bot.privmsg( msg )
+
 
 	if command in [ 'quit' ]:
 		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
