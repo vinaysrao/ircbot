@@ -10,5 +10,5 @@ while [ true ]; do
                 exit 0
         fi
         git reset --hard HEAD
-        git pull --rebase
+        git pull --rebase 
 done
