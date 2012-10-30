@@ -115,14 +115,6 @@ def command( bot, line, socket ):
 		msg += ', '.join( helpers.commandList() )
 		bot.privmsg( msg )
 
-	if command in [ 'define' ]:
-		from nltk.corpus import wordnet
-		try:
-			s = wordnet.synsets( commandstring )
-			msg = s[ 0 ].definition
-			bot.privmsg( msg.capitalize() )
-		except:
-			bot.privmsg( 'Definition not found' )
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
