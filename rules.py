@@ -17,6 +17,8 @@
 
 import helpers
 import sys
+from nltk.corpus import wordnet
+
 
 def privmsg( bot, line, socket ):
     if 'ping' in line.lower() and bot.nick in line:
@@ -100,7 +102,6 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'define' ]:
-		from nltk.corpus import wordnet
 		s = wordnet.synsets( commandstring )
 		try:
 			msg = s[ 0 ].definition.capitalize()
