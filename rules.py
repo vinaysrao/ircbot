@@ -129,6 +129,11 @@ def command( bot, line, socket ):
 		msg += ', '.join( helpers.commandList() )
 		bot.privmsg( msg )
 
+	if command == 'togglewelcome':
+		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
+			bot.welcome_new = not bot.welcome_new
+			msg = 'Bot\'s welcome mode: %s' % bot.welcome_new
+
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
@@ -153,6 +158,8 @@ def topic( bot, line, socket ):
 def join( bot, line, socket ):
 	import re
 	nick = re.search( ':(.*)!', line )
+	if not bot.welcome_new:
+		return
 	if nick:
 		nick = nick.group( 1 )
 		if helpers.isNewNick( nick, bot.nameslist ) and nick != bot.nick:

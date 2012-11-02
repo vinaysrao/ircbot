@@ -33,6 +33,7 @@ class IRCBot():
         self.password = password
         self.port = port
         self.symbol = symbol
+        self.welcome_new = True
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
