@@ -135,11 +135,11 @@ class IRCBot():
         import subprocess
         command = 'git commit -a -mNick'.split()
         try:
-            print subprocess.check_output( command )
+            print subprocess.check_output( command, stderr=subprocess.STDOUT )
             command = 'git pull --rebase'.split()
-            print subprocess.check_output( command )
+            print subprocess.check_output( command, stderr=subprocess.STDOUT )
             command = 'git push'.split()
-            print subprocess.check_output( command )
+            print subprocess.check_output( command, stderr=subprocess.STDOUT )
         except:
             print 'Failed to commit/push commit'
 
