@@ -129,10 +129,11 @@ def command( bot, line, socket ):
 		msg += ', '.join( helpers.commandList() )
 		bot.privmsg( msg )
 
-	if command == 'togglewelcome':
+	if command in 'togglewelcome':
 		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
 			bot.welcome_new = not bot.welcome_new
 			msg = 'Bot\'s welcome mode: %s' % bot.welcome_new
+			bot.privmsg( msg )
 
 
 def nameList( bot, line, socket ):
