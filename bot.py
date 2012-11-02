@@ -133,9 +133,10 @@ class IRCBot():
 
     def commitNicks( self ):
         import subprocess
-        command = 'git commit -a -m'.split()
-        command.append( "Bot: Commit nick list" )
+        command = 'git commit -a -mNick'.split()
         try:
+            subprocess.check_output( command )
+            command = 'git pull --rebase'.split()
             subprocess.check_output( command )
             command = 'git push'.split()
             subprocess.check_output( command )
