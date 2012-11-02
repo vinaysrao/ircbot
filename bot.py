@@ -26,7 +26,7 @@ class IRCBot():
     #Requires a call to 'run' to start
     lastline = ''
     rules = {}
-    def __init__( self, password, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsb0t', port = 6667, symbol = '!' ):
+    def __init__( self, password, host = 'irc.freenode.net', channel = '#bmslug', nick = 'dpaK', port = 6667, symbol = '!' ):
         self.host = host
         self.channel = channel
         self.nick = nick
