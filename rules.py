@@ -165,9 +165,6 @@ def join( bot, line, socket ):
 		nick = nick.group( 1 )
 		if helpers.isNewNick( nick, bot.nameslist ) and nick != bot.nick:
 			msg = nick + ': '
-			msg += 'Hi! Looks like you\'re new here. This is the IRC Channel of the \"BMS - Libre User Group\".'
-			bot.privmsg( msg )
-			msg = nick + ': '
-			msg +=  'If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
+			msg += 'Welcome to BMSLUG! If you don\'t receive a reply immediately, stick around; someone will get to you eventually.'
 			bot.privmsg( msg )
 			bot.addNames( [ nick ] )
