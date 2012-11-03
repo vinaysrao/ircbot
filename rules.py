@@ -120,6 +120,8 @@ def command( bot, line, socket ):
 			msg = meanings[ 0 ][ 'def' ] + '. Example - ' + meanings[ 0 ][ 'example' ]
 		except:
 			msg = 'Definition not found'
+
+		msg.replace( "\n", ' ')
 		bot.privmsg( msg )
 
 
