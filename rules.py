@@ -17,6 +17,7 @@
 
 import helpers
 import sys
+import urbandict
 from nltk.corpus import wordnet
 
 
@@ -111,6 +112,11 @@ def command( bot, line, socket ):
 			msg = 'Definition not found'
 		if commandstring == 'god':
 			msg = "\' \'"
+		bot.privmsg( msg )
+
+	if command in [ 'ud' ]:
+		meanings = urbandict.define( commandstring )
+		msg = meanings[ 0 ][ 'def' ] + '. Example - ' + meanings[ 0 ][ 'example' ]
 		bot.privmsg( msg )
 
 
