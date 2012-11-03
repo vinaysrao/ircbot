@@ -121,7 +121,7 @@ def command( bot, line, socket ):
 		except:
 			msg = 'Definition not found'
 
-		msg = msg.splitlines().join(' ')
+		msg = ' '.join( msg.splitlines() )
 		bot.privmsg( msg )
 
 
