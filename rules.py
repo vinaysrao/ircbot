@@ -104,6 +104,22 @@ def command( bot, line, socket ):
 		msg += url
 		bot.privmsg( msg )
 
+        if command in [ 'google' ]:
+                if commandstring == '':
+                        return
+                query = commandstring.split( ' ', 1 )
+                if helpers.isNewNick( query[ 0 ], bot.activeNickList ):
+                        msg = ''
+                        query = '+'.join( query )
+                else:
+                        msg = query[ 0 ] + ': '
+                        query = '+'.join( query[ 1: ] )
+
+                query = '+'.join( query.split() )
+                url = 'https://www.google.com/search?q=' + query
+                msg += url
+                bot.privmsg( msg )
+
 	if command in [ 'define' ]:
 		s = wordnet.synsets( commandstring )
 		try:
