@@ -126,24 +126,8 @@ class IRCBot():
         if helpers.isNewNick( nick, self.nameslist ):
             self.nameslist.append( nick )
             self.serializeNicks()
-            self.commitNicks()
             return True
         return False
-
-
-    def commitNicks( self ):
-        import subprocess
-        command = 'git commit -a -mNick'.split()
-        try:
-            print subprocess.check_output( command, stderr=subprocess.STDOUT )
-            command = 'git pull --rebase'.split()
-            print subprocess.check_output( command, stderr=subprocess.STDOUT )
-            command = 'git push'.split()
-            print subprocess.check_output( command, stderr=subprocess.STDOUT )
-        except:
-            print 'Failed to commit/push commit'
-
-
 
     def serializeNicks( self ):
         helpers.serializeNicks( 'known_nicks.txt', self.nameslist )
