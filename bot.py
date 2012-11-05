@@ -38,6 +38,7 @@ class IRCBot():
         self.socket = socket.socket()
         self.maxlength = 2048
         self.timer = time.time()
+        self.quiet = False
 
     	self.nameslist = helpers.readNicksFromFile( 'known_nicks.txt' )
         self.admins = helpers.readNicksFromFile( 'admins.txt' )
@@ -104,7 +105,7 @@ class IRCBot():
 
 
     def privmsg( self, msg ):
-        if msg == '':
+        if msg == '' or self.quiet:
             return
         print msg
         self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )

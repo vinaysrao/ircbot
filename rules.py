@@ -162,6 +162,10 @@ def command( bot, line, socket ):
 			msg = 'Bot\'s welcome mode: %s' % bot.welcome_new
 			bot.privmsg( msg )
 
+	if command in 'quiet':
+		if( helpers.isAdmin( bot, helpers.getnick( line ) ) ):
+			bot.quiet = not bot.quiet
+
 
 def nameList( bot, line, socket ):
 	if bot.nick + ' @' in line:
