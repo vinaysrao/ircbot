@@ -23,7 +23,7 @@ from nltk.corpus import wordnet
 
 def privmsg( bot, line, socket ):
     if 'ping' in line.lower() and bot.nick in line:
-        nick = helpers.getnick( line.split()[ 0 ] )
+        nick = helpers.getnick( line )
         if nick:
             bot.privmsg( nick  + ': Pong' )
 
