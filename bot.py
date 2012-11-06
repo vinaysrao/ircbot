@@ -39,7 +39,7 @@ class IRCBot():
         self.maxlength = 2048
         self.quiet = False
         self.lastping = time.time()
-        self.pingtimeout = 2 * 60  # 2 minute timeout
+        self.pingtimeout = 5 * 60  # 2 minute timeout
 
     	self.nameslist = helpers.readNicksFromFile( 'known_nicks.txt' )
         self.admins = helpers.readNicksFromFile( 'admins.txt' )
