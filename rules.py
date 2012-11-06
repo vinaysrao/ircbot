@@ -30,7 +30,7 @@ def privmsg( bot, line, socket ):
 
 def pong( bot, line, socket ):
 	bot.lastping = time.time()
-    bot.pongToServer( line )
+	bot.pongToServer( line )
 
 
 def action( bot, line, socket ):
