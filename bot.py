@@ -37,7 +37,6 @@ class IRCBot():
         self.channeltopic = ''
         self.socket = socket.socket()
         self.maxlength = 2048
-        self.timer = time.time()
         self.quiet = False
         self.lastping = time.time()
         self.pingtimeout = 2 * 60  # 2 minute timeout
@@ -72,7 +71,7 @@ class IRCBot():
 
     def run( self ):
         while True:
-            if time.time() - self.timer > 256 and time.time() - self.lastping > self.pingtimeout: #Tries to reconnect to server on loss of connectivity
+            if time.time() - self.lastping > self.pingtimeout: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
                 __import__( 'sys' ).exit( 1 )
 
@@ -99,7 +98,6 @@ class IRCBot():
     
     def pongToServer( self, msg ):
         #Check if "PING :" is in 'line' and call pongToServer
-        self.timer = time.time()
         pingcmd = msg.split( ":", 1 )
         pingmsg = pingcmd[ 1 ]
         print "PONG :" + pingmsg
