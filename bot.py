@@ -73,6 +73,7 @@ class IRCBot():
         while True:
             if time.time() - self.lastping > self.pingtimeout: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
+                print "PING timed out"
                 __import__( 'sys' ).exit( 1 )
 
             lines = self.readlines()
