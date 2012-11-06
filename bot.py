@@ -39,6 +39,8 @@ class IRCBot():
         self.maxlength = 2048
         self.timer = time.time()
         self.quiet = False
+        self.lastping = time.time()
+        self.pingtimeout = 2 * 60  # 2 minute timeout
 
     	self.nameslist = helpers.readNicksFromFile( 'known_nicks.txt' )
         self.admins = helpers.readNicksFromFile( 'admins.txt' )
@@ -70,7 +72,7 @@ class IRCBot():
 
     def run( self ):
         while True:
-            if time.time() - self.timer > 256: #Tries to reconnect to server on loss of connectivity
+            if time.time() - self.timer > 256 and time.time() - self.lastping > self.pingtimeout: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
                 __import__( 'sys' ).exit( 1 )
 
