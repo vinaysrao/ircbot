@@ -99,6 +99,7 @@ class IRCBot():
     
     def pongToServer( self, msg ):
         #Check if "PING :" is in 'line' and call pongToServer
+        self.lastping = time.time()
         pingcmd = msg.split( ":", 1 )
         pingmsg = pingcmd[ 1 ]
         print "PONG :" + pingmsg

@@ -29,7 +29,6 @@ def privmsg( bot, line, socket ):
 
 
 def pong( bot, line, socket ):
-	bot.lastping = time.time()
 	bot.pongToServer( line )
 
 
