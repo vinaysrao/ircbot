@@ -19,6 +19,11 @@ import bot
 import rules
 import sys
 
+def serializeNicks():
+    global bot
+    bot.serializeNicks()
+
+
 if __name__ == "__main__":
     bot = bot.IRCBot( password = sys.argv[ 1 ] )
     #--START-- of main rules
@@ -30,5 +35,10 @@ if __name__ == "__main__":
     bot.addrule( '353', rules.nameList )
     bot.addrule( '332', rules.topic )
     #--END-- of main rules
-    #Add custom rules below
+    #Add bot to custom commands below
+    from commands import commandlist
+    for i in commandlist: i.setBot( bot )
     bot.run()
+
+    import atexit
+    atexit.register( serializeNicks )

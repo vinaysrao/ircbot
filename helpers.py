@@ -17,8 +17,9 @@
 import re
 
 def commandList():
-	commands = [ 'say', 'echo', 'topic', 'yourcode', 'addnick', 'god', 'quit', 'restart', 'list', 'kick', 'lmgtfy', 'google', 'define', 'togglewelcome', 'ud', 'quiet' ]
-	return commands
+    from commands import commandlist
+    commands = [ i.command_string() for i in commandlist ]
+    return commands
 
 
 def readNicksFromFile( filename ):

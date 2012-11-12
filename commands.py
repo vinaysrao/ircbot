@@ -15,33 +15,41 @@
 
 import helpers
 
+commandlist = []
+
 class Command:
 	'''Inherit this class and define commands that define the following methods'''
-	def __init__( self, command = '', usage_format = '' ):
+	def __init__( self, bot = None, command = '', usage_format = '' ):
 		self.command = command
+		self.bot = bot
 		self.usage_format = usage_format
+		global commandlist
+		commandlist.append( self )
 
 
 	def usage( self ):
 		return self.usage_format
 
+	def setBot( self, bot ):
+		self.bot = bot
+
 	def command_string( self ):
 		return self.command
 
-	def handler( self, line, bot ):
+	def handler( self, command_string ):
 		'''What must be done when this command is found'''
-		pass
+		self.bot.privmsg( command_string )
 
 
 class WebQuery( Command ):
-	def __init__( self, command = '', usage_format = '', url = '' ):
-		Command.__init__( self, command,  usage_format )
+	def __init__( self, bot = None, command = '', usage_format = '', url = '' ):
+		Command.__init__( self, bot, command,  usage_format )
 		self.url = url
 
-	def handler( self, line, bot ):
-		if line == '':
+	def handler( self, command_string ):
+		if command_string == '':
 			return
-		query = line.split( ' ', 1 )
+		query = command_string.split( ' ', 1 )
 		if helpers.isNewNick( query[ 0 ], bot.activeNickList ):
 			msg = ''
 			query = '+'.join( query )
@@ -52,8 +60,41 @@ class WebQuery( Command ):
 		query = '+'.join( query.split() )
 		url = self.url + query
 		msg += url
-		bot.privmsg( msg )
+		self.bot.privmsg( msg )
 
+
+class SingleEchoCommand( Command ):
+	def __init__( self, bot = None, command = '', usage_format = '', echo_message = '' ):
+		Command.__init__( self, bot, command, usage_format )
+		self.echo_message = echo_message
+
+	def handler( self, command_string ):
+		msg = helpers.prependNick( command_string )
+		msg += self.echo_message
+		self.bot.privmsg( msg )
+
+
+class Toggle( Command ):
+	def __init__( self, bot = None, command = '', usage_format = '', toggle_variable = None ):
+		Command.__init__( self, bot, command, usage_format )
+		self.toggle_variable = toggle_variable
+
+	def handler( self, command_string ):
+		vars( self.bot )[ self.toggle_variable ] = not vars( self.bot )[ self.toggle_variable ]
+		msg = 'Bot\'s %s mode: %s' % ( self.toggle_variable, vars( self.bot )[ self.toggle_variable ] )
+		self.bot.privmsg( msg )
+
+
+
+#START: Objects creation
+say = Command( command = 'say' )
 
 google = WebQuery( command = 'google', url = 'https://www.google.com/search?q=' )
 lmgtfy = WebQuery( command = 'lmgtfy', url = 'http://www.lmgtfy.com/?q=' )
+
+yourcode = SingleEchoCommand( command = 'say', echo_message = 'https://github.com/vinaysrao/ircbot.git' )
+god = SingleEchoCommand( command = 'god', echo_message = 'http://www.youtube.com/watch?v=8nAos1M-_Ts' )
+listcommands = SingleEchoCommand( command = 'list', echo_message = helpers.commandList() )
+
+quiet = Toggle( command = 'quiet', toggle_variable = 'quiet' )
+welcome = Toggle( command = 'welcome', toggle_variable = 'welcome_new' )
