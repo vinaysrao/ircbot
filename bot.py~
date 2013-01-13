@@ -1,0 +1,72 @@
+import socket
+import re
+
+class IRCBot:
+    #A simple IRC Bot that pongs et all
+    #Requires a call to 'run' to start
+
+    def __init__( self, host = 'irc.freenode.net', channel = '#bmslug', nick = 'bmsbot', port = 6667, symbol = '$'):
+        self.host = host
+        self.channel = channel
+        self.nick = nick
+        self.port = port
+        self.symbol = symbol
+        self.socket = socket.socket()
+        self.maxlength = 2048
+        
+        self.initConnection()
+    
+    
+    def initConnection( self ):
+        self.socket.connect( ( self.host, self.port ) )
+        self.socket.send( "USER " + self.nick + " " + self.nick + " " + self.nick + " :bmsbot\n" )
+        self.socket.send( "NICK " + self.nick + "\r\n" )
+        self.socket.send( "JOIN " + self.channel + "\r\n" )
+        
+        
+    def nicklist( self ):
+        self.socket.send( "NAMES " + self.channel + "\r\n" )
+        #Implement parsing this
+        
+        
+    def run( self ):
+        while True:
+            line = self.socket.recv( self.maxlength ).strip( "\r\n" )
+            print line
+            
+            #Ping from server
+            if ( "PING :" in line ):
+                self.pongToServer( line )
+                
+            if ( "ACTION" in line ):
+                #parse Action
+                pass
+            
+            if( " PRIVMSG " in line ):
+                #Normal messages to channel
+                try:
+                    msg = line.split( ':', 2 )[ 2 ] #What was said
+                    nick = re.match( ":(.*?)!~", line ).group( 1 ) #nick who said this
+                except:
+                    continue
+                
+                if re.search( 'ping', msg, re.IGNORECASE ):
+                    self.privmsg( nick + ": Pong" )
+                pass
+    
+    
+    def pongToServer( self, msg ):
+        #Check if "PING :" is in 'line' and call pongToServer
+        pingcmd = msg.split( ":", 1 )
+        pingmsg = pingcmd[ 1 ]
+        self.socket.send( "PONG :" + pingmsg + "\r\n" )
+    
+    
+    def privmsg( self, msg ):
+        self.socket.send( "PRIVMSG " + self.channel + " :" + msg + "\r\n" )
+        
+        
+
+if __name__ == "__main__":
+    bot = IRCBot()
+    bot.run()
