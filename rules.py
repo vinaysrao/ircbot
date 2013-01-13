@@ -18,7 +18,7 @@
 import helpers
 import sys
 import urbandict
-from nltk.corpus import wordnet
+
 
 
 def privmsg( bot, line, socket ):
@@ -121,6 +121,11 @@ def command( bot, line, socket ):
                 bot.privmsg( msg )
 
 	if command in [ 'define' ]:
+                try:
+                    from nltk.corpus import wordnet
+                except ImportError:
+                    bot.privmsg('NLTK Not found!')
+                    return
 		s = wordnet.synsets( commandstring )
 		try:
 			msg = s[ 0 ].definition.capitalize()
