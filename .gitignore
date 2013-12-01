@@ -1,3 +1,4 @@
 *.pyc
 known_nicks.txt
 admins.txt
+*.kdev4

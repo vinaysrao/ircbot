@@ -136,11 +136,11 @@ def command( bot, line, socket ):
 		bot.privmsg( msg )
 
 	if command in [ 'ud' ]:
-		meanings = urbandict.define( commandstring )
-		try:
-			msg = meanings[ 0 ][ 'def' ] + '. Example - ' + meanings[ 0 ][ 'example' ]
-		except:
-			msg = 'Definition not found'
+		meaning = urbandict.define( commandstring )
+                if meaning is not None:
+                    msg = meaning
+                else:
+                    msg = "Definition not found"
 
 		msg = ' '.join( msg.splitlines() )
 		bot.privmsg( msg )

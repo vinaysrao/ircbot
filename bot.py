@@ -32,6 +32,7 @@ class IRCBot():
         self.nick = nick
         self.password = password
         self.port = port
+        self.connected = False
         self.symbol = symbol
         self.welcome_new = True
         self.channeltopic = ''
@@ -55,8 +56,10 @@ class IRCBot():
             self.socket.send( "NICK " + self.nick + "\r\n" )
             self.socket.send( "PRIVMSG NICKSERV :IDENTIFY " + self.password + "\r\n" )
             self.socket.send( "JOIN " + self.channel + "\r\n" )
+            self.connected = True
         except:
             print sys.exc_info()[ 0 ]
+            sys.exit( 1 )
         
         
     def getnicklist( self ):
@@ -70,6 +73,8 @@ class IRCBot():
         return lines
 
     def run( self ):
+        if self.connected == False:
+            sys.exit( 0 )
         while True:
             if time.time() - self.lastping > self.pingtimeout: #Tries to reconnect to server on loss of connectivity
                 self.serializeNicks()
