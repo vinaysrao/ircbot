@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 def define(word):
     if not type(word) is str:
         return
+    words = word.split()
+    if len(words) > 1:
+        word = words[0]
 
     url = 'http://www.urbandictionary.com/define.php?term=%s' % word
     try:
